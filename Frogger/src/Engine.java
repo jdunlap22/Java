@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -28,25 +30,33 @@ public class Engine extends JFrame implements KeyListener {
 		Frog.setY(765);
 		Frog.setWidth(51);
 		Frog.setHeight(36);
+		Frog.setVisible(true);
+		Frog.setMoving(true);
 		Frog.setImage("Frog.png");
 		
+		//set up Log
 		Log = new Log();
 		Log.setX(0);
 		Log.setY(65);
 		Log.setWidth(272);
 		Log.setHeight(58);
+		Log.setVisible(true);
+		Log.setMoving(true);
 		Log.setImage("Log.png");
 		
+		// set up Car
 		Car = new Car();
 		Car.setX(0);
-		Car.setY(433);
+		Car.setY(434);
 		Car.setWidth(135);
 		Car.setHeight(68);
+		Car.setVisible(true);
+		Car.setMoving(true);
 		Car.setImage("Car.png");
 		
+		
+		//Set up BackGround
 		BackGround = new Background();
-		BackGround.setX(0);
-		BackGround.setY(0);
 		BackGround.setWidth(1000);
 		BackGround.setHeight(813);
 		BackGround.setImage("frogger-background.png");
@@ -82,7 +92,6 @@ public class Engine extends JFrame implements KeyListener {
 		BGLabel = new JLabel();
 		BGImage = new ImageIcon(getClass().getResource(BackGround.getImage()));
 		BGLabel.setIcon(BGImage);
-		BGLabel.setLocation(BackGround.getX(), BackGround.getY());
 		BGLabel.setSize(BackGround.getWidth(), BackGround.getHeight());
 		
 		//screen population
@@ -91,6 +100,9 @@ public class Engine extends JFrame implements KeyListener {
 		add(CarLabel);
 		add(BGLabel);
 		
+		content.addKeyListener(this);
+		content.setFocusable(true);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
@@ -98,5 +110,58 @@ public class Engine extends JFrame implements KeyListener {
 		Engine myGame = new Engine();
 		myGame.setVisible(true);
 		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {	
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int x = Frog.getX();
+		int y = Frog.getY();
+		
+		//keys to move Frog
+		if (e.getKeyCode() == KeyEvent.VK_W) {
+			y -= GameProperties.CHARACTER_STEP;
+			
+			if (y + Frog.getHeight() < 0) {
+				y = GameProperties.SCREEN_HEIGHT;
+			}
+			
+		} else if (e.getKeyCode() == KeyEvent.VK_S) {
+			y += GameProperties.CHARACTER_STEP;
+			
+			if (y >= GameProperties.SCREEN_HEIGHT) {
+				y = -1 * Frog.getHeight();
+			}
+			
+		} else if (e.getKeyCode() == KeyEvent.VK_A) {
+			x -= GameProperties.CHARACTER_STEP;	
+			
+			if (x + Frog.getWidth() < 0) {
+				x = GameProperties.SCREEN_WIDTH;
+			}
+			
+		} else if (e.getKeyCode() == KeyEvent.VK_D) {
+			x += GameProperties.CHARACTER_STEP;	
+			
+			if (x >= GameProperties.SCREEN_WIDTH) {
+				x = -1 * Frog.getWidth();
+			}
+			
+		} else {
+			System.out.println("Invalid Key. Please Try using the WASD keys!");
+		}
+		
+		Frog.setX(x);
+		Frog.setY(y);
+		
+		//update Frog
+		FrogLabel.setLocation(Frog.getX(), Frog.getY());
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
 	}
 }
