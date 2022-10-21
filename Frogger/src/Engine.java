@@ -1,13 +1,16 @@
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class Engine extends JFrame implements KeyListener {
+public class Engine extends JFrame implements KeyListener, ActionListener {
 	
 	//data class instances
 	private Frog Frog;
@@ -19,7 +22,7 @@ public class Engine extends JFrame implements KeyListener {
 	private Container content;
 	private JLabel FrogLabel, LogLabel, CarLabel, BGLabel;
 	private ImageIcon FrogImage, LogImage, CarImage, BGImage;
-
+	private JButton Start, Visibility;
 	
 	
 	public Engine() {
@@ -41,7 +44,7 @@ public class Engine extends JFrame implements KeyListener {
 		Log.setWidth(272);
 		Log.setHeight(58);
 		Log.setVisible(true);
-		Log.setMoving(true);
+		Log.setMoving(false);
 		Log.setImage("Log.png");
 		
 		// set up Car
@@ -51,7 +54,7 @@ public class Engine extends JFrame implements KeyListener {
 		Car.setWidth(135);
 		Car.setHeight(68);
 		Car.setVisible(true);
-		Car.setMoving(true);
+		Car.setMoving(false);
 		Car.setImage("Car.png");
 		
 		
@@ -80,6 +83,7 @@ public class Engine extends JFrame implements KeyListener {
 		LogLabel.setIcon(LogImage);
 		LogLabel.setSize(Log.getWidth(), Log.getHeight());
 		LogLabel.setLocation(Log.getX(), Log.getY());
+		Log.setLogLabel(LogLabel);
 		
 		//Car graphic added to screen and instantiation
 		CarLabel = new JLabel();
@@ -87,6 +91,7 @@ public class Engine extends JFrame implements KeyListener {
 		CarLabel.setIcon(CarImage);
 		CarLabel.setSize(Car.getWidth(), Car.getHeight());
 		CarLabel.setLocation(Car.getX(), Car.getY());
+		Car.setCarLabel(CarLabel);
 		
 		//Background graphic added to screen and instantiation
 		BGLabel = new JLabel();
@@ -94,7 +99,23 @@ public class Engine extends JFrame implements KeyListener {
 		BGLabel.setIcon(BGImage);
 		BGLabel.setSize(BackGround.getWidth(), BackGround.getHeight());
 		
+		//Start Button and Disappear Button
+		Start = new JButton ("Start");
+		Start.setSize(100, 50);
+		Start.setLocation(GameProperties.SCREEN_WIDTH-125, GameProperties.SCREEN_HEIGHT-150);
+		Start.setFocusable(false);
+		
+		
+		Visibility = new JButton ("Hide");
+		Visibility.setSize(100, 50);
+		Visibility.setLocation(GameProperties.SCREEN_WIDTH-125, GameProperties.SCREEN_HEIGHT-95);
+		Visibility.setFocusable(false);
+		
 		//screen population
+		add(Start);
+		Start.addActionListener(this);
+		add(Visibility);
+		Visibility.addActionListener(this);
 		add(FrogLabel);
 		add(LogLabel);
 		add(CarLabel);
@@ -163,5 +184,41 @@ public class Engine extends JFrame implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		//Button set up code for each button
+		if (e.getSource() == Start) {
+			if (Car.getMoving() && Log.getMoving()) {
+				//Stop, button displays Start
+				Car.setMoving(false);
+				Log.setMoving(false);
+				Start.setText("Start");
+			} else {
+				//Start, button displays Stop
+				Car.startMoving();
+				Log.startMoving();
+				Start.setText("Stop");
+			}
+		} else if (e.getSource() == Visibility) {
+			//check visibility of car
+			if (Car.getVisible() && Log.getVisible()) {
+			//if visible hide to check collision, change text to button to say show
+				Car.setVisible(false);
+				Log.setVisible(false);
+				CarLabel.setVisible(Car.getVisible());
+				LogLabel.setVisible(Log.getVisible());
+				Visibility.setText("Show");
+			} else {
+			//If hidden change text to hide on button.
+				Car.setVisible(true);
+				CarLabel.setVisible(Car.getVisible());
+				Log.setVisible(true);
+				LogLabel.setVisible(Log.getVisible());
+				Visibility.setText("Hide");
+			}
+		}
+		
 	}
 }

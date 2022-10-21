@@ -64,16 +64,6 @@ public class Sprite {
 		this.moving = moving;
 	}
 	
-	public void show() {
-		this.visible = true;
-		
-	}
-	
-	public void hide() {
-		this.visible = false;
-		
-	}
-	
 	public void move() {
 		this.moving = true;
 	}
