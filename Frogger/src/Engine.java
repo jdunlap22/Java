@@ -20,8 +20,8 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 	
 	//elements
 	private Container content;
-	private JLabel FrogLabel, LogLabel, CarLabel, BGLabel;
-	private ImageIcon FrogImage, LogImage, CarImage, BGImage;
+	private JLabel FrogLabel, LogLabel, BGLabel;
+	private ImageIcon FrogImage, LogImage, BGImage;
 	private JButton Start, Visibility;
 	
 	
@@ -46,17 +46,7 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		Log.setVisible(true);
 		Log.setMoving(false);
 		Log.setImage("Log.png");
-		
-		// set up Car
-		Car = new Car();
-		Car.setX(0);
-		Car.setY(434);
-		Car.setWidth(135);
-		Car.setHeight(68);
-		Car.setVisible(true);
-		Car.setMoving(false);
-		Car.setImage("Car.png");
-		
+				
 		
 		//Set up BackGround
 		BackGround = new Background();
@@ -85,13 +75,9 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		LogLabel.setLocation(Log.getX(), Log.getY());
 		Log.setLogLabel(LogLabel);
 		
-		//Car graphic added to screen and instantiation
-		CarLabel = new JLabel();
-		CarImage = new ImageIcon(getClass().getResource(Car.getImage()));
-		CarLabel.setIcon(CarImage);
-		CarLabel.setSize(Car.getWidth(), Car.getHeight());
-		CarLabel.setLocation(Car.getX(), Car.getY());
-		Car.setCarLabel(CarLabel);
+		LogRows LRows = new LogRows(content);
+		CarRows CRows = new CarRows(content);
+		
 		
 		//Background graphic added to screen and instantiation
 		BGLabel = new JLabel();
@@ -118,7 +104,6 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		Visibility.addActionListener(this);
 		add(FrogLabel);
 		add(LogLabel);
-		add(CarLabel);
 		add(BGLabel);
 		
 		content.addKeyListener(this);
@@ -197,7 +182,10 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 				Start.setText("Start");
 			} else {
 				//Start, button displays Stop
-				Car.startMoving();
+				//for (Car Car: CarRow1) {
+					
+				//Car.startMoving();
+				//}
 				Log.startMoving();
 				Start.setText("Stop");
 			}
@@ -207,13 +195,13 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 			//if visible hide to check collision, change text to button to say show
 				Car.setVisible(false);
 				Log.setVisible(false);
-				CarLabel.setVisible(Car.getVisible());
+				//CarLabel.setVisible(Car.getVisible());
 				LogLabel.setVisible(Log.getVisible());
 				Visibility.setText("Show");
 			} else {
 			//If hidden change text to hide on button.
 				Car.setVisible(true);
-				CarLabel.setVisible(Car.getVisible());
+				//CarLabel.setVisible(Car.getVisible());
 				Log.setVisible(true);
 				LogLabel.setVisible(Log.getVisible());
 				Visibility.setText("Hide");
