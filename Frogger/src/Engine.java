@@ -36,18 +36,7 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		Frog.setVisible(true);
 		Frog.setMoving(true);
 		Frog.setImage("Frog.png");
-		
-		//set up Log
-		Log = new Log();
-		Log.setX(0);
-		Log.setY(65);
-		Log.setWidth(272);
-		Log.setHeight(58);
-		Log.setVisible(true);
-		Log.setMoving(false);
-		Log.setImage("Log.png");
 				
-		
 		//Set up BackGround
 		BackGround = new Background();
 		BackGround.setWidth(1000);
@@ -66,14 +55,6 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		FrogLabel.setIcon(FrogImage);
 		FrogLabel.setSize(Frog.getWidth(), Frog.getHeight());
 		FrogLabel.setLocation(Frog.getX(), Frog.getY());
-		
-		//Log graphic added to screen and instantiation
-		LogLabel = new JLabel();
-		LogImage = new ImageIcon(getClass().getResource(Log.getImage()));
-		LogLabel.setIcon(LogImage);
-		LogLabel.setSize(Log.getWidth(), Log.getHeight());
-		LogLabel.setLocation(Log.getX(), Log.getY());
-		Log.setLogLabel(LogLabel);
 		
 		LogRows LRows = new LogRows(content);
 		CarRows CRows = new CarRows(content);
@@ -103,7 +84,6 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		add(Visibility);
 		Visibility.addActionListener(this);
 		add(FrogLabel);
-		add(LogLabel);
 		add(BGLabel);
 		
 		content.addKeyListener(this);
@@ -186,7 +166,9 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 					
 				//Car.startMoving();
 				//}
-				Log.startMoving();
+				//for (Log Log: LogRow1) {
+				//Log.startMoving();
+				//}
 				Start.setText("Stop");
 			}
 		} else if (e.getSource() == Visibility) {
@@ -203,7 +185,7 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 				Car.setVisible(true);
 				//CarLabel.setVisible(Car.getVisible());
 				Log.setVisible(true);
-				LogLabel.setVisible(Log.getVisible());
+				//LogLabel.setVisible(Log.getVisible());
 				Visibility.setText("Hide");
 			}
 		}

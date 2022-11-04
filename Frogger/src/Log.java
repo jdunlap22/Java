@@ -65,7 +65,7 @@ public class Log extends Sprite implements Runnable {
 		System.out.println("Thread started.");
 		this.moving = true;
 		while (this.moving) {
-			//moving car
+			//moving log
 			
 			//get current x
 			int currentX = this.x;
