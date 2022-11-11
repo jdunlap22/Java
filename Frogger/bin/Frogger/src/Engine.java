@@ -1,13 +1,16 @@
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class Engine extends JFrame implements KeyListener {
+public class Engine extends JFrame implements KeyListener, ActionListener {
 	
 	//data class instances
 	private Frog Frog;
@@ -17,9 +20,8 @@ public class Engine extends JFrame implements KeyListener {
 	
 	//elements
 	private Container content;
-	private JLabel FrogLabel, LogLabel, CarLabel, BGLabel;
-	private ImageIcon FrogImage, LogImage, CarImage, BGImage;
-
+	private JLabel FrogLabel, BGLabel;
+	private ImageIcon FrogImage, BGImage;
 	
 	
 	public Engine() {
@@ -34,27 +36,14 @@ public class Engine extends JFrame implements KeyListener {
 		Frog.setMoving(true);
 		Frog.setImage("Frog.png");
 		
-		//set up Log
-		Log = new Log();
-		Log.setX(0);
-		Log.setY(65);
-		Log.setWidth(272);
-		Log.setHeight(58);
-		Log.setVisible(true);
-		Log.setMoving(true);
-		Log.setImage("Log.png");
 		
-		// set up Car
-		Car = new Car();
-		Car.setX(0);
-		Car.setY(434);
-		Car.setWidth(135);
-		Car.setHeight(68);
-		Car.setVisible(true);
-		Car.setMoving(true);
-		Car.setImage("Car.png");
-		
-		
+		//Frog graphic added to screen and instantiation
+		FrogLabel = new JLabel();
+		FrogImage = new ImageIcon(getClass().getResource(Frog.getImage()));
+		FrogLabel.setIcon(FrogImage);
+		FrogLabel.setSize(Frog.getWidth(), Frog.getHeight());
+		FrogLabel.setLocation(Frog.getX(), Frog.getY());
+				
 		//Set up BackGround
 		BackGround = new Background();
 		BackGround.setWidth(1000);
@@ -67,26 +56,10 @@ public class Engine extends JFrame implements KeyListener {
 		content.setBackground(Color.gray);
 		setLayout(null);
 		
-		//Frog graphic added to screen and instantiation
-		FrogLabel = new JLabel();
-		FrogImage = new ImageIcon(getClass().getResource(Frog.getImage()));
-		FrogLabel.setIcon(FrogImage);
-		FrogLabel.setSize(Frog.getWidth(), Frog.getHeight());
-		FrogLabel.setLocation(Frog.getX(), Frog.getY());
+		CarRows CRows = new CarRows(content, Frog, FrogLabel);
 		
-		//Log graphic added to screen and instantiation
-		LogLabel = new JLabel();
-		LogImage = new ImageIcon(getClass().getResource(Log.getImage()));
-		LogLabel.setIcon(LogImage);
-		LogLabel.setSize(Log.getWidth(), Log.getHeight());
-		LogLabel.setLocation(Log.getX(), Log.getY());
-		
-		//Car graphic added to screen and instantiation
-		CarLabel = new JLabel();
-		CarImage = new ImageIcon(getClass().getResource(Car.getImage()));
-		CarLabel.setIcon(CarImage);
-		CarLabel.setSize(Car.getWidth(), Car.getHeight());
-		CarLabel.setLocation(Car.getX(), Car.getY());
+		add(FrogLabel);
+		LogRows LRows = new LogRows(content, Frog, FrogLabel);
 		
 		//Background graphic added to screen and instantiation
 		BGLabel = new JLabel();
@@ -95,9 +68,6 @@ public class Engine extends JFrame implements KeyListener {
 		BGLabel.setSize(BackGround.getWidth(), BackGround.getHeight());
 		
 		//screen population
-		add(FrogLabel);
-		add(LogLabel);
-		add(CarLabel);
 		add(BGLabel);
 		
 		content.addKeyListener(this);
@@ -124,12 +94,32 @@ public class Engine extends JFrame implements KeyListener {
 		//keys to move Frog
 		if (e.getKeyCode() == KeyEvent.VK_W) {
 			y -= GameProperties.CHARACTER_STEP;
+			
+			if (y + Frog.getHeight() < 0) {
+				y = GameProperties.SCREEN_HEIGHT;
+			}
+			
 		} else if (e.getKeyCode() == KeyEvent.VK_S) {
-			y += GameProperties.CHARACTER_STEP;	
+			y += GameProperties.CHARACTER_STEP;
+			
+			if (y >= GameProperties.SCREEN_HEIGHT) {
+				y = -1 * Frog.getHeight();
+			}
+			
 		} else if (e.getKeyCode() == KeyEvent.VK_A) {
 			x -= GameProperties.CHARACTER_STEP;	
+			
+			if (x + Frog.getWidth() < 0) {
+				x = GameProperties.SCREEN_WIDTH;
+			}
+			
 		} else if (e.getKeyCode() == KeyEvent.VK_D) {
 			x += GameProperties.CHARACTER_STEP;	
+			
+			if (x >= GameProperties.SCREEN_WIDTH) {
+				x = -1 * Frog.getWidth();
+			}
+			
 		} else {
 			System.out.println("Invalid Key. Please Try using the WASD keys!");
 		}
@@ -143,5 +133,10 @@ public class Engine extends JFrame implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
 	}
 }

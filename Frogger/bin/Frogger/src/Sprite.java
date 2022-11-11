@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 
 public class Sprite {
 
@@ -5,6 +6,7 @@ public class Sprite {
 	protected int x, y;
 	protected int height, width;
 	protected String Image;
+	protected Rectangle r;
 	
 	private Boolean visible, moving;
 	
@@ -15,6 +17,8 @@ public class Sprite {
 	
 	public void setX(int x) {
 		this.x = x;
+		updateRectanglePosition();
+		updateRectangleSize();
 	}
 	
 	public int getY() {
@@ -23,6 +27,8 @@ public class Sprite {
 	
 	public void setY(int y) {
 		this.y = y;
+		updateRectanglePosition();
+		updateRectangleSize();
 	}
 	
 	public int getHeight() {
@@ -31,6 +37,8 @@ public class Sprite {
 	
 	public void setHeight(int height) {
 		this.height = height;
+		updateRectanglePosition();
+		updateRectangleSize();
 	}
 	
 	public int getWidth() {
@@ -38,6 +46,8 @@ public class Sprite {
 	}
 	public void setWidth(int width) {
 		this.width = width;
+		updateRectanglePosition();
+		updateRectangleSize();
 	}
 	
 	public String getImage() {
@@ -64,16 +74,6 @@ public class Sprite {
 		this.moving = moving;
 	}
 	
-	public void show() {
-		this.visible = true;
-		
-	}
-	
-	public void hide() {
-		this.visible = false;
-		
-	}
-	
 	public void move() {
 		this.moving = true;
 	}
@@ -83,9 +83,12 @@ public class Sprite {
 		super();
 		this.x = -1;
 		this.y = -1;
+		this.r = new Rectangle();
 		this.width = -1;
 		this.height = -1;
 		this.Image = "";
+		updateRectanglePosition();
+		updateRectangleSize();
 	}
 	
 	//open constructor that can be overloaded
@@ -93,10 +96,27 @@ public class Sprite {
 		super();
 		this.x = x;
 		this.y = y;
+		this.r = new Rectangle();
 		this.width = height;
 		this.height = width;
 		this.Image = Image;
+		updateRectanglePosition();
+		updateRectangleSize();
 	}
+	
+	public void updateRectanglePosition() {
+	    this.r.x = this.x;
+	    this.r.y = this.y;
+	  }
+
+	  public void updateRectangleSize() {
+	    this.r.width = this.width;
+	    this.r.height = this.height;
+	  }
+
+	  public Rectangle getRectangle() {
+	    return this.r;
+	  }
 	
 	//displaying the positions
 	public void Display () {
