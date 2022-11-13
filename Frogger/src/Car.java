@@ -2,9 +2,10 @@ import javax.swing.JLabel;
 
 public class Car extends Sprite implements Runnable {
 	
-	private Boolean visible, moving;
+	private Boolean visible, moving, reverse = false;
 	private Thread t;
-	private JLabel CarLabel;
+	private JLabel CarLabel, FrogLabel;
+	private Sprite Frog;
 	
 	public Car() {
 		super(0, 0, 135, 68, "Car.png");
@@ -32,6 +33,23 @@ public class Car extends Sprite implements Runnable {
 		this.moving = moving;
 	}
 	
+	public Boolean getReverse() {
+		return reverse;
+	}
+
+	public void setReverse(Boolean reverse) {
+		this.reverse = reverse;
+	}
+	
+	public void setFrog (Sprite Frog) {
+		this.Frog = Frog;
+	}
+	
+	public void setFrogLabel (JLabel FrogLabel) {
+		this.FrogLabel = FrogLabel;
+	}
+	
+	
 	public void show() {
 		this.visible = true;
 		
@@ -50,8 +68,17 @@ public class Car extends Sprite implements Runnable {
 		System.out.println("moving: " + this.moving);
 	}
 	
+	public void detectCollison() {
+		if(r.intersects(Frog.getRectangle())) {
+			System.out.println("Splat!");
+			Frog.setX(450);
+			Frog.setY(765);
+			FrogLabel.setLocation(Frog.getX(), Frog.getY());
+			Engine.setScore(Engine.getScore() - 50);			
+		}
+	}
+	
 	public void startMoving() {
-		System.out.println("Move!");
 		if (!this.moving) {
 			t = new Thread(this, "Car Thread");
 			t.start();
@@ -61,7 +88,6 @@ public class Car extends Sprite implements Runnable {
 	@Override
 	public void run() {
 		
-		System.out.println("Thread started.");
 		this.moving = true;
 		while (this.moving) {
 			//moving car
@@ -69,17 +95,26 @@ public class Car extends Sprite implements Runnable {
 			//get current x
 			int currentX = this.x;
 			//increase x
-			currentX += GameProperties.CHARACTER_STEP;
-			//boundary check
-			if (currentX >= GameProperties.SCREEN_WIDTH) {
-				currentX = -1 * this.width;
+			if (this.reverse == true) {
+				currentX -= GameProperties.CHARACTER_STEP;
+				//boundary check
+				if (currentX <= - this.width) {
+					currentX = GameProperties.SCREEN_WIDTH + this.width;
+				}
+			} else {
+				currentX += GameProperties.CHARACTER_STEP;
+				//boundary check
+				if (currentX >= GameProperties.SCREEN_WIDTH) {
+					currentX = -1 * this.width;
+				}
 			}
 			//update x
-			this.x = currentX;
-			System.out.println("X, Y:" + this.x + "," + this.y);
+			setX(currentX);
+			//System.out.println("X, Y:" + this.x + "," + this.y);
 			//update CarLabel
 			this.CarLabel.setLocation(this.x, this.y);
 			//pause
+			detectCollison();
 			try {
 				Thread.sleep(300);
 			} catch (Exception e) {

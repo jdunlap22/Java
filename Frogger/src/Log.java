@@ -1,16 +1,20 @@
 import javax.swing.JLabel;
 
-public class Log extends Sprite implements Runnable {
+public class Log extends Sprite {
 	
-	private Boolean visible, moving;
-	private Thread t;
-	private JLabel LogLabel;
+	private Boolean visible, moving, reverse = false;
+	private JLabel LogLabel, FrogLabel;
+	private Sprite Frog;
 	
 	//parameters for the Log
 	public Log() {
 		super(0, 0, 58, 272, "Log.png");
 		this.visible = true;
 		this.moving = false;
+	}
+	
+	public JLabel getLogLabel() {
+		return LogLabel;
 	}
 	
 	public void setLogLabel(JLabel temp) {
@@ -33,6 +37,22 @@ public class Log extends Sprite implements Runnable {
 		this.moving = moving;
 	}
 	
+	public Boolean getReverse() {
+		return reverse;
+	}
+
+	public void setReverse(Boolean reverse) {
+		this.reverse = reverse;
+	}
+	
+	public void setFrog (Sprite Frog) {
+		this.Frog = Frog;
+	}
+	
+	public void setFrogLabel (JLabel FrogLabel) {
+		this.FrogLabel = FrogLabel;
+	}	
+	
 	public void show() {
 		this.visible = true;
 		
@@ -51,45 +71,27 @@ public class Log extends Sprite implements Runnable {
 		System.out.println("moving: " + this.moving);
 	}
 	
-	public void startMoving() {
-		System.out.println("Move!");
-		if (!this.moving) {
-			t = new Thread(this, "Log Thread");
-			t.start();
-		}
-	}
-	
-	@Override
-	public void run() {
-		
-		System.out.println("Thread started.");
-		this.moving = true;
-		while (this.moving) {
-			//moving log
-			
-			//get current x
-			int currentX = this.x;
-			//increase x
-			currentX += GameProperties.CHARACTER_STEP;
-			//boundary check
-			if (currentX >= GameProperties.SCREEN_WIDTH) {
-				currentX = -1 * this.width;
+	public void detectCollison() {
+		if(r.intersects(Frog.getRectangle())) {
+			setFrogOnLog(true);
+			if (this.reverse == true) {
+			Frog.setX(Frog.getX() - GameProperties.CHARACTER_STEP);
+			} else {
+				Frog.setX(Frog.getX() + GameProperties.CHARACTER_STEP);
 			}
-			//update x
-			this.x = currentX;
-			System.out.println("X, Y:" + this.x + "," + this.y);
-			//update CarLabel
-			this.LogLabel.setLocation(this.x, this.y);
-			//pause
-			try {
-				Thread.sleep(700);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}	
-			
+			FrogLabel.setLocation(Frog.getX(), Frog.getY());
+		}	
+		if (getFrogOnLog() == true && ! r.intersects(Frog.getRectangle())) {
+			setFrogOnLog(false);
 		}
-		
-		System.out.println("End Thread");
 	}
 	
-}
+	public boolean detectWater() {
+		
+		if (Frog.getY() >= 63 && Frog.getY() <= 378 && ! r.intersects(Frog.getRectangle()) && getFrogOnLog() == false) {
+			return true;
+		}
+		return false;
+	}
+}			
+
