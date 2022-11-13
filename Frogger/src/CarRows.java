@@ -5,14 +5,9 @@ import javax.swing.JLabel;
 
 public class CarRows {
 	
-	private JLabel CarLabel, FrogLabel;
+	private JLabel CarLabel;
 	private ImageIcon CarImage;
-	private Sprite Frog = new Sprite();
-	
-	public void setFrog(Sprite Frog) {
-		this.Frog = Frog;
-	}
-	
+		
 	public CarRows(Container container, Sprite Frog, JLabel FrogLabel, Engine Engine) {
 		
 		

@@ -99,6 +99,7 @@ public class Sprite {
 	//constructor 1
 	public Sprite() {
 		super();
+
 		this.x = -1;
 		this.y = -1;
 		this.r = new Rectangle();
@@ -112,8 +113,8 @@ public class Sprite {
 	//open constructor that can be overloaded
 	public Sprite(int x, int y, int width, int height, String Image) {
 		super();
-		this.x = x;
-		this.y = y;
+		this.x = -1;
+		this.y = -1;
 		this.r = new Rectangle();
 		this.width = height;
 		this.height = width;

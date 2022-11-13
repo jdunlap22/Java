@@ -7,7 +7,7 @@ public class LogRows extends Sprite implements Runnable {
 	
 	private JLabel LogLabel, FrogLabel;
 	private ImageIcon LogImage;
-	private Sprite Frog = new Sprite();
+	private Sprite Frog;
 	private Boolean moving = true;
 	private int LogCount = 0;
 	
@@ -22,6 +22,7 @@ public class LogRows extends Sprite implements Runnable {
 		
 	this.FrogLabel = FrogLabel;
 	this.Engine = Engine;
+	this.Frog = Frog;
 	
 	int Spacing = 0;
 	
@@ -339,11 +340,13 @@ public class LogRows extends Sprite implements Runnable {
 			}
 			
 			if (LogCount == 0) {
+				if(!r.intersects(Frog.getRectangle())) {
+					Frog.setX(450);
+					Frog.setY(765);
+					FrogLabel.setLocation(Frog.getX(), Frog.getY());
+					Engine.setScore(Engine.getScore() - 50);
+				}
 			System.out.println("Splat!");
-			Frog.setX(450);
-			Frog.setY(765);
-			FrogLabel.setLocation(Frog.getX(), Frog.getY());
-			Engine.setScore(Engine.getScore() - 50);
 			}
 			
 			try {
