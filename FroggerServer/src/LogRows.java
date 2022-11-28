@@ -1,12 +1,8 @@
 import java.awt.Container;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 public class LogRows extends Sprite implements Runnable {
 	
-	private JLabel LogLabel, FrogLabel;
-	private ImageIcon LogImage;
 	private Sprite Frog;
 	private Boolean moving = true;
 	private int LogCount = 0;
@@ -18,13 +14,11 @@ public class LogRows extends Sprite implements Runnable {
 	Log[] LogRow5;
 	Thread t;
 	
-	public LogRows(Container container, Sprite Frog, JLabel FrogLabel, Engine Engine) {
+	public LogRows(Container container, Sprite Frog, Engine Engine) {
 		
-	this.FrogLabel = FrogLabel;
 	this.Engine = Engine;
 	this.Frog = Frog;
 	
-	int Spacing = 0;
 	
 	LogRow1 = new Log[3];
 	
@@ -42,19 +36,7 @@ public class LogRows extends Sprite implements Runnable {
 			Log.setMoving(false);
 			Log.setFrog(Frog);
 			Log.setImage("Log.png");
-			Log.setFrogLabel(FrogLabel);
-			
-			LogLabel = new JLabel();
-			LogImage = new ImageIcon(getClass().getResource(Log.getImage()));
-			LogLabel.setIcon(LogImage);
-			LogLabel.setSize(Log.getWidth(), Log.getHeight());
-			Log.setX(Log.getX() + Spacing);
-			LogLabel.setLocation(Log.getX(), Log.getY());
-			Log.setLogLabel(LogLabel);
-			container.add(LogLabel);
-			
-			Spacing += 320;
-			
+						
 		}
 		
 		LogRow2 = new Log[3];
@@ -73,18 +55,7 @@ public class LogRows extends Sprite implements Runnable {
 				Log.setReverse(true);
 				Log.setFrog(Frog);
 				Log.setImage("Log.png");
-				Log.setFrogLabel(FrogLabel);
 				
-				LogLabel = new JLabel();
-				LogImage = new ImageIcon(getClass().getResource(Log.getImage()));
-				LogLabel.setIcon(LogImage);
-				LogLabel.setSize(Log.getWidth(), Log.getHeight());
-				Log.setX(Log.getX() + Spacing);
-				LogLabel.setLocation(Log.getX(), Log.getY());
-				Log.setLogLabel(LogLabel);
-				container.add(LogLabel); 
-				
-				Spacing += 340;
 			}
 			
 			LogRow3 = new Log[3];
@@ -103,19 +74,7 @@ public class LogRows extends Sprite implements Runnable {
 					Log.setMoving(false);
 					Log.setFrog(Frog);
 					Log.setImage("Log.png");
-					Log.setFrogLabel(FrogLabel);
-					
-					LogLabel = new JLabel();
-					LogImage = new ImageIcon(getClass().getResource(Log.getImage()));
-					LogLabel.setIcon(LogImage);
-					LogLabel.setSize(Log.getWidth(), Log.getHeight());
-					Log.setX(Log.getX() + Spacing);
-					LogLabel.setLocation(Log.getX(), Log.getY());
-					Log.setLogLabel(LogLabel);
-					container.add(LogLabel); 
-					
-					Spacing += 400;
-					
+										
 				}
 				
 				LogRow4 = new Log[3];
@@ -134,19 +93,7 @@ public class LogRows extends Sprite implements Runnable {
 						Log.setReverse(true);
 						Log.setFrog(Frog);
 						Log.setImage("Log.png");
-						Log.setFrogLabel(FrogLabel);
-						
-						LogLabel = new JLabel();
-						LogImage = new ImageIcon(getClass().getResource(Log.getImage()));
-						LogLabel.setIcon(LogImage);
-						LogLabel.setSize(Log.getWidth(), Log.getHeight());
-						Log.setX(Log.getX() + Spacing);
-						LogLabel.setLocation(Log.getX(), Log.getY());
-						Log.setLogLabel(LogLabel);
-						container.add(LogLabel); 
-						
-						Spacing += 330;
-						
+											
 					}
 					
 				LogRow5 = new Log[3];
@@ -165,19 +112,7 @@ public class LogRows extends Sprite implements Runnable {
 						Log.setMoving(false);
 						Log.setFrog(Frog);
 						Log.setImage("Log.png");
-						Log.setFrogLabel(FrogLabel);
-						
-						LogLabel = new JLabel();
-						LogImage = new ImageIcon(getClass().getResource(Log.getImage()));
-						LogLabel.setIcon(LogImage);
-						LogLabel.setSize(Log.getWidth(), Log.getHeight());
-						Log.setX(Log.getX() + Spacing);
-						LogLabel.setLocation(Log.getX(), Log.getY());
-						Log.setLogLabel(LogLabel);
-						container.add(LogLabel); 
-							
-						Spacing += 320;
-							
+														
 					}
 						t = new Thread(this);
 						t.start();
@@ -211,7 +146,6 @@ public class LogRows extends Sprite implements Runnable {
 						}
 					//update x
 					Log.setX(currentX);
-					Log.getLogLabel().setLocation(Log.getX(),Log.getY());
 					//pause
 					Log.detectCollison();
 			}
@@ -234,7 +168,6 @@ public class LogRows extends Sprite implements Runnable {
 						}
 					//update x
 					Log.setX(currentX);
-					Log.getLogLabel().setLocation(Log.getX(),Log.getY());
 					//pause
 					Log.detectCollison();
 				
@@ -258,7 +191,6 @@ public class LogRows extends Sprite implements Runnable {
 						}
 					//update x
 					Log.setX(currentX);
-					Log.getLogLabel().setLocation(Log.getX(),Log.getY());
 					//pause
 					Log.detectCollison();
 				
@@ -282,7 +214,6 @@ public class LogRows extends Sprite implements Runnable {
 						}
 					//update x
 					Log.setX(currentX);
-					Log.getLogLabel().setLocation(Log.getX(),Log.getY());
 					//pause
 					Log.detectCollison();
 				
@@ -306,7 +237,6 @@ public class LogRows extends Sprite implements Runnable {
 						}
 					//update x
 					Log.setX(currentX);
-					Log.getLogLabel().setLocation(Log.getX(),Log.getY());
 					//pause
 					Log.detectCollison();
 			}
@@ -343,7 +273,6 @@ public class LogRows extends Sprite implements Runnable {
 				if(!r.intersects(Frog.getRectangle())) {
 					Frog.setX(450);
 					Frog.setY(765);
-					FrogLabel.setLocation(Frog.getX(), Frog.getY());
 					Engine.setScore(Engine.getScore() - 50);
 				}
 			System.out.println("Splat!");

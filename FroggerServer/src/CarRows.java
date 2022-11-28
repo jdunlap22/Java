@@ -1,21 +1,15 @@
 import java.awt.Container;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
 public class CarRows {
 	
-	private JLabel CarLabel;
-	private ImageIcon CarImage;
 		
-	public CarRows(Container container, Sprite Frog, JLabel FrogLabel, Engine Engine) {
+	public CarRows(Container container, Sprite Frog, Engine Engine) {
 		
 		
 	Car[] CarRow1;
 	Car[] CarRow2;
 	Car[] CarRow3;
 	
-	int xoffset = 0;
 	
 	CarRow1 = new Car[3];
 	
@@ -33,19 +27,6 @@ public class CarRows {
 			Car.setMoving(false);
 			Car.setFrog(Frog);
 			Car.setImage("Car.png");
-			Car.setFrogLabel(FrogLabel);
-			
-			CarLabel = new JLabel();
-			CarImage = new ImageIcon(getClass().getResource(Car.getImage()));
-			CarLabel.setIcon(CarImage);
-			CarLabel.setSize(Car.getWidth(), Car.getHeight());
-			Car.setX(Car.getX() + xoffset);
-			CarLabel.setLocation(Car.getX(), Car.getY());
-			Car.setCarLabel(CarLabel);
-			Car.setEngine(Engine);
-			container.add(CarLabel);
-			
-			xoffset += 290;
 			
 			Car.startMoving();
 		}
@@ -66,19 +47,6 @@ public class CarRows {
 				Car.setReverse(true);
 				Car.setFrog(Frog);
 				Car.setImage("Car.png");
-				Car.setFrogLabel(FrogLabel);
-				
-				CarLabel = new JLabel();
-				CarImage = new ImageIcon(getClass().getResource(Car.getImage()));
-				CarLabel.setIcon(CarImage);
-				CarLabel.setSize(Car.getWidth(), Car.getHeight());
-				Car.setX(Car.getX() + xoffset);
-				CarLabel.setLocation(Car.getX(), Car.getY());
-				Car.setCarLabel(CarLabel);
-				Car.setEngine(Engine);
-				container.add(CarLabel);
-				
-				xoffset += 250;
 				
 				Car.startMoving();
 			}
@@ -99,19 +67,6 @@ public class CarRows {
 					Car.setMoving(false);
 					Car.setFrog(Frog);
 					Car.setImage("Car.png");
-					Car.setFrogLabel(FrogLabel);
-					
-					CarLabel = new JLabel();
-					CarImage = new ImageIcon(getClass().getResource(Car.getImage()));
-					CarLabel.setIcon(CarImage);
-					CarLabel.setSize(Car.getWidth(), Car.getHeight());
-					Car.setX(Car.getX() + xoffset);
-					CarLabel.setLocation(Car.getX(), Car.getY());
-					Car.setCarLabel(CarLabel);
-					Car.setEngine(Engine);
-					container.add(CarLabel);
-					
-					xoffset += 250;
 					
 					Car.startMoving();
 				}

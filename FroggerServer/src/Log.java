@@ -1,9 +1,8 @@
-import javax.swing.JLabel;
+
 
 public class Log extends Sprite {
 	
 	private Boolean visible, moving, reverse = false;
-	private JLabel LogLabel, FrogLabel;
 	private Sprite Frog;
 	
 	//parameters for the Log
@@ -13,13 +12,6 @@ public class Log extends Sprite {
 		this.moving = false;
 	}
 	
-	public JLabel getLogLabel() {
-		return LogLabel;
-	}
-	
-	public void setLogLabel(JLabel temp) {
-		this.LogLabel = temp;
-	}
 	
 	public Boolean getVisible() {
 		return visible;
@@ -49,9 +41,6 @@ public class Log extends Sprite {
 		this.Frog = Frog;
 	}
 	
-	public void setFrogLabel (JLabel FrogLabel) {
-		this.FrogLabel = FrogLabel;
-	}	
 	
 	public void show() {
 		this.visible = true;
@@ -79,7 +68,6 @@ public class Log extends Sprite {
 			} else {
 				Frog.setX(Frog.getX() + GameProperties.CHARACTER_STEP);
 			}
-			FrogLabel.setLocation(Frog.getX(), Frog.getY());
 		}	
 		if (getFrogOnLog() == true && ! r.intersects(Frog.getRectangle())) {
 			setFrogOnLog(false);

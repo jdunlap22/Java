@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Scanner;
 
 import javax.swing.ImageIcon;
@@ -22,7 +25,6 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 	
 	//elements
 	private Container content;
-	private JLabel FrogLabel, BGLabel, ScoreLabel;
 	private ImageIcon FrogImage, BGImage;
 	
 	public int getScore() {
@@ -31,6 +33,27 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 	
 	public void setScore(int Score) {
 		this.Score = Score;
+	}
+	
+	public void ConnectServer() {
+		
+		final int SERVER_PORT = 5556;
+		ServerSocket server;
+		try {
+			server = new ServerSocket(SERVER_PORT);
+			System.out.println("Waiting for clients to connect...");
+			while(true) {
+				Socket s = server.accept();
+				System.out.println("client connected");
+				
+				Service myService = new Service(s);
+				Thread t = new Thread(myService);
+				t.start();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -46,28 +69,8 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		Frog.setMoving(true);
 		Frog.setImage("Frog.png");
 		
-		Database = new Database();
-		
-		//Score Label set up to display score
-		ScoreLabel = new JLabel();
-		ScoreLabel.setSize(300, 30);
-		ScoreLabel.setFont(new Font("Times New Roman", Font.BOLD, 30));
-		ScoreLabel.setForeground(Color.WHITE);
-		ScoreLabel.setLocation(10, 10);
-		ScoreLabel.setText("Score: " + Score);
-		
-		//Frog graphic added to screen and instantiation
-		FrogLabel = new JLabel();
-		FrogImage = new ImageIcon(getClass().getResource(Frog.getImage()));
-		FrogLabel.setIcon(FrogImage);
-		FrogLabel.setSize(Frog.getWidth(), Frog.getHeight());
-		FrogLabel.setLocation(Frog.getX(), Frog.getY());
+		Database = new Database();		
 				
-		//Set up BackGround
-		BackGround = new Background();
-		BackGround.setWidth(1000);
-		BackGround.setHeight(813);
-		BackGround.setImage("frogger-background.png");
 		
 		//screen setup
 		setSize(GameProperties.SCREEN_WIDTH, GameProperties.SCREEN_HEIGHT);
@@ -75,19 +78,10 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		content.setBackground(Color.gray);
 		setLayout(null);
 		
-		CarRows CRows = new CarRows(content, Frog, FrogLabel, this);
-		add(ScoreLabel);
-		add(FrogLabel);
-		LogRows LRows = new LogRows(content, Frog, FrogLabel, this);
+		CarRows CRows = new CarRows(content, Frog, this);
+		LogRows LRows = new LogRows(content, Frog, this);
 		
-		//Background graphic added to screen and instantiation
-		BGLabel = new JLabel();
-		BGImage = new ImageIcon(getClass().getResource(BackGround.getImage()));
-		BGLabel.setIcon(BGImage);
-		BGLabel.setSize(BackGround.getWidth(), BackGround.getHeight());
-		
-		//screen population
-		add(BGLabel);
+
 		
 		content.addKeyListener(this);
 		content.setFocusable(true);
@@ -115,7 +109,6 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 			if (Frog.getY() <= 60) {
 				Score += 50;
 				Database.setScore(Score);
-				ScoreLabel.setText("Score: " + Score);
 				Scanner reader = new Scanner(System.in);
 				System.out.println("Please Enter Name");
 				String Name = reader.nextLine();
@@ -158,10 +151,8 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		
 		Frog.setX(x);
 		Frog.setY(y);
+	}
 		
-		//update Frog
-		FrogLabel.setLocation(Frog.getX(), Frog.getY());
-		}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
