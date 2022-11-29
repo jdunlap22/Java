@@ -193,123 +193,24 @@ public class LogRows extends Sprite implements Runnable {
 			LogCount = 0;
 			//moving log
 			for (Log Log : LogRow1) {
-				//get current x
-				int currentX = Log.getX();
-				//increase x
-					if (Log.getReverse() == true) {
-						currentX -= GameProperties.CHARACTER_STEP;
-						//boundary check
-						if (currentX <= - Log.getWidth()) {
-							currentX = GameProperties.SCREEN_WIDTH + Log.getWidth();
-						}
-						} else {
-							currentX += GameProperties.CHARACTER_STEP;
-							//boundary check
-							if (currentX >= GameProperties.SCREEN_WIDTH) {
-								currentX = -1 * Log.getWidth();
-							}
-						}
-					//update x
-					Log.setX(currentX);
-					Log.getLogLabel().setLocation(Log.getX(),Log.getY());
-					//pause
 					Log.detectCollison();
 			}
 			for (Log Log: LogRow2) {
-				//get current x
-				int currentX = Log.getX();
-				//increase x
-					if (Log.getReverse() == true) {
-						currentX -= GameProperties.CHARACTER_STEP;
-						//boundary check
-						if (currentX <= - Log.getWidth()) {
-							currentX = GameProperties.SCREEN_WIDTH + Log.getWidth();
-						}
-						} else {
-							currentX += GameProperties.CHARACTER_STEP;
-							//boundary check
-							if (currentX >= GameProperties.SCREEN_WIDTH) {
-								currentX = -1 * Log.getWidth();
-							}
-						}
-					//update x
-					Log.setX(currentX);
-					Log.getLogLabel().setLocation(Log.getX(),Log.getY());
-					//pause
 					Log.detectCollison();
 				
 			}
 			for (Log Log: LogRow3) {
-				//get current x
-				int currentX = Log.getX();
-				//increase x
-					if (Log.getReverse() == true) {
-						currentX -= GameProperties.CHARACTER_STEP;
-						//boundary check
-						if (currentX <= - Log.getWidth()) {
-							currentX = GameProperties.SCREEN_WIDTH + Log.getWidth();
-						}
-						} else {
-							currentX += GameProperties.CHARACTER_STEP;
-							//boundary check
-							if (currentX >= GameProperties.SCREEN_WIDTH) {
-								currentX = -1 * Log.getWidth();
-							}
-						}
-					//update x
-					Log.setX(currentX);
-					Log.getLogLabel().setLocation(Log.getX(),Log.getY());
-					//pause
 					Log.detectCollison();
 				
 			}
 			for (Log Log: LogRow4) {
-				//get current x
-				int currentX = Log.getX();
-				//increase x
-					if (Log.getReverse() == true) {
-						currentX -= GameProperties.CHARACTER_STEP;
-						//boundary check
-						if (currentX <= - Log.getWidth()) {
-							currentX = GameProperties.SCREEN_WIDTH + Log.getWidth();
-						}
-						} else {
-							currentX += GameProperties.CHARACTER_STEP;
-							//boundary check
-							if (currentX >= GameProperties.SCREEN_WIDTH) {
-								currentX = -1 * Log.getWidth();
-							}
-						}
-					//update x
-					Log.setX(currentX);
-					Log.getLogLabel().setLocation(Log.getX(),Log.getY());
-					//pause
 					Log.detectCollison();
 				
 			}
 			for (Log Log: LogRow5) {
-				//get current x
-				int currentX = Log.getX();
-				//increase x
-					if (Log.getReverse() == true) {
-						currentX -= GameProperties.CHARACTER_STEP;
-						//boundary check
-						if (currentX <= - Log.getWidth()) {
-							currentX = GameProperties.SCREEN_WIDTH + Log.getWidth();
-						}
-						} else {
-							currentX += GameProperties.CHARACTER_STEP;
-							//boundary check
-							if (currentX >= GameProperties.SCREEN_WIDTH) {
-								currentX = -1 * Log.getWidth();
-							}
-						}
-					//update x
-					Log.setX(currentX);
-					Log.getLogLabel().setLocation(Log.getX(),Log.getY());
-					//pause
 					Log.detectCollison();
 			}
+			
 			for (Log Log: LogRow1) {
 				if (Log.detectWater() == false) {
 					LogCount++;

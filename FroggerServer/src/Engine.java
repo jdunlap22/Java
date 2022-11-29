@@ -1,6 +1,4 @@
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Font;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -10,22 +8,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-public class Engine extends JFrame implements KeyListener, ActionListener {
+public class Engine implements KeyListener, ActionListener {
 	
 	//data class instances
 	private Frog Frog;
-	private Background BackGround;
 	private int Score;
 	private Database Database;
-	
-	//elements
-	private Container content;
-	private ImageIcon FrogImage, BGImage;
 	
 	public int getScore() {
 		return Score;
@@ -39,7 +27,7 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		
 		final int SERVER_PORT = 5556;
 		ServerSocket server;
-		try {
+		try {	
 			server = new ServerSocket(SERVER_PORT);
 			System.out.println("Waiting for clients to connect...");
 			while(true) {
@@ -59,6 +47,8 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 	
 	public Engine() {
 		
+		ConnectServer();
+		
 		// set up Frog
 		Frog = new Frog();
 		Frog.setX(450);
@@ -72,27 +62,13 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		Database = new Database();		
 				
 		
-		//screen setup
-		setSize(GameProperties.SCREEN_WIDTH, GameProperties.SCREEN_HEIGHT);
-		content = getContentPane();
-		content.setBackground(Color.gray);
-		setLayout(null);
+		CarRows CRows = new CarRows(Frog, this);
+		LogRows LRows = new LogRows(Frog, this);
 		
-		CarRows CRows = new CarRows(content, Frog, this);
-		LogRows LRows = new LogRows(content, Frog, this);
-		
-
-		
-		content.addKeyListener(this);
-		content.setFocusable(true);
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public static void main (String args []) {
-		Engine myGame = new Engine();
-		myGame.setVisible(true);
-		
+		Engine myGame = new Engine();	
 	}
 
 	@Override

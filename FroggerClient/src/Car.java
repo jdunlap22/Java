@@ -90,31 +90,9 @@ public class Car extends Sprite implements Runnable {
 		
 		this.moving = true;
 		while (this.moving) {
-			//moving car
-			
-			//get current x
-			int currentX = this.x;
-			//increase x
-			if (this.reverse == true) {
-				currentX -= GameProperties.CHARACTER_STEP;
-				//boundary check
-				if (currentX <= - this.width) {
-					currentX = GameProperties.SCREEN_WIDTH + this.width;
-				}
-			} else {
-				currentX += GameProperties.CHARACTER_STEP;
-				//boundary check
-				if (currentX >= GameProperties.SCREEN_WIDTH) {
-					currentX = -1 * this.width;
-				}
-			}
-			//update x
-			setX(currentX);
-			//System.out.println("X, Y:" + this.x + "," + this.y);
-			//update CarLabel
-			this.CarLabel.setLocation(this.x, this.y);
-			//pause
+
 			detectCollison();
+			
 			try {
 				Thread.sleep(300);
 			} catch (Exception e) {

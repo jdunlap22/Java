@@ -1,20 +1,20 @@
-import javax.swing.JLabel;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 public class Car extends Sprite implements Runnable {
 	
 	private Boolean visible, moving, reverse = false;
 	private Thread t;
-	private JLabel CarLabel, FrogLabel;
-	private Sprite Frog;
+	private int CarNum;
+	final static int SERVER_PORT = 5556;
 	
-	public Car() {
+	public Car(int CarNum) {
 		super(0, 0, 135, 68, "Car.png");
 		this.visible = true;
 		this.moving = false;
-	}
-	
-	public void setCarLabel(JLabel temp) {
-		this.CarLabel = temp;
+		this.CarNum = CarNum;
 	}
 	
 	public Boolean getVisible() {
@@ -40,16 +40,8 @@ public class Car extends Sprite implements Runnable {
 	public void setReverse(Boolean reverse) {
 		this.reverse = reverse;
 	}
-	
-	public void setFrog (Sprite Frog) {
-		this.Frog = Frog;
-	}
-	
-	public void setFrogLabel (JLabel FrogLabel) {
-		this.FrogLabel = FrogLabel;
-	}
-	
-	
+		
+		
 	public void show() {
 		this.visible = true;
 		
@@ -66,16 +58,6 @@ public class Car extends Sprite implements Runnable {
 		System.out.println("Frog: " + this.Image);
 		System.out.println("visible: " + this.visible);
 		System.out.println("moving: " + this.moving);
-	}
-	
-	public void detectCollison() {
-		if(r.intersects(Frog.getRectangle())) {
-			System.out.println("Splat!");
-			Frog.setX(450);
-			Frog.setY(765);
-			FrogLabel.setLocation(Frog.getX(), Frog.getY());
-			Engine.setScore(Engine.getScore() - 50);			
-		}
 	}
 	
 	public void startMoving() {
@@ -97,12 +79,40 @@ public class Car extends Sprite implements Runnable {
 			//increase x
 			if (this.reverse == true) {
 				currentX -= GameProperties.CHARACTER_STEP;
+				try {
+					Socket s = new Socket("localhost", SERVER_PORT);
+					OutputStream outstream = s.getOutputStream();
+					PrintWriter out = new PrintWriter(outstream);
+					String command = "CAR_POSITION " + CarNum + " " + currentX;
+					System.out.println("Sending: " + command);
+					out.println(command);
+					out.flush();
+					s.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//boundary check
 				if (currentX <= - this.width) {
 					currentX = GameProperties.SCREEN_WIDTH + this.width;
 				}
 			} else {
 				currentX += GameProperties.CHARACTER_STEP;
+				
+				try {
+					Socket s = new Socket("localhost", SERVER_PORT);
+					OutputStream outstream = s.getOutputStream();
+					PrintWriter out = new PrintWriter(outstream);
+					String command = "CAR_POSITION " + CarNum + " " + currentX;
+					System.out.println("Sending: " + command);
+					out.println(command);
+					out.flush();
+					s.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				//boundary check
 				if (currentX >= GameProperties.SCREEN_WIDTH) {
 					currentX = -1 * this.width;
@@ -110,11 +120,7 @@ public class Car extends Sprite implements Runnable {
 			}
 			//update x
 			setX(currentX);
-			//System.out.println("X, Y:" + this.x + "," + this.y);
-			//update CarLabel
-			this.CarLabel.setLocation(this.x, this.y);
-			//pause
-			detectCollison();
+
 			try {
 				Thread.sleep(300);
 			} catch (Exception e) {

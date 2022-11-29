@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -41,8 +42,49 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		this.Score = Score;
 	}
 	
+	public void ServerListener() {
+		
+		ServerSocket client;
+		
+		try {
+			client = new ServerSocket(CLIENT_PORT);
+			Thread t1 = new Thread ( new Runnable () {
+				public void run ( ) {
+					synchronized(this) {
+						
+						System.out.println("Waiting for server responses...");
+						while(true) {
+							Socket s2;
+							try {
+								s2 = client.accept();
+								Service myService = new Service (s2);
+								Thread t = new Thread(myService);
+								t.start();
+								
+								
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							System.out.println("client connected");
+							
+						}
+						
+					}
+				}
+			});
+			t1.start( );
+			
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
 	
 	public Engine() {
+		
+		ServerListener();
 		
 		// set up Frog
 		Frog = new Frog();
@@ -120,11 +162,13 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 		//keys to move Frog
 		if (e.getKeyCode() == KeyEvent.VK_W) {
 			
+			y -= GameProperties.CHARACTER_STEP;
+			
 			try {
 				Socket s = new Socket("localhost", SERVER_PORT);
 				OutputStream outstream = s.getOutputStream();
 				PrintWriter out = new PrintWriter(outstream);
-				String command = "PLAYER 1 UP\n";
+				String command = "PLAYER 1 UP " + Frog.getX() + ", " + y;
 				System.out.println("Sending: " + command);
 				out.println(command);
 				out.flush();
@@ -133,8 +177,6 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-						
-			y -= GameProperties.CHARACTER_STEP;
 			if (Frog.getY() <= 60) {
 				Score += 50;
 				Database.setScore(Score);
@@ -157,11 +199,13 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 			
 		} else if (e.getKeyCode() == KeyEvent.VK_S) {
 			
+			y += GameProperties.CHARACTER_STEP;
+			
 			try {
 				Socket s = new Socket("localhost", SERVER_PORT);
 				OutputStream outstream = s.getOutputStream();
 				PrintWriter out = new PrintWriter(outstream);
-				String command = "PLAYER 1 UP\n";
+				String command = "PLAYER 1 DOWN " + Frog.getX() + ", " + y;
 				System.out.println("Sending: " + command);
 				out.println(command);
 				out.flush();
@@ -171,7 +215,6 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 				e1.printStackTrace();
 			}
 			
-			y += GameProperties.CHARACTER_STEP;
 			
 			if (y >= GameProperties.SCREEN_HEIGHT) {
 				y = -1 * Frog.getHeight();
@@ -179,11 +222,13 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 			
 		} else if (e.getKeyCode() == KeyEvent.VK_A) {
 			
+			x -= GameProperties.CHARACTER_STEP;
+			
 			try {
 				Socket s = new Socket("localhost", SERVER_PORT);
 				OutputStream outstream = s.getOutputStream();
 				PrintWriter out = new PrintWriter(outstream);
-				String command = "PLAYER 1 UP\n";
+				String command = "PLAYER 1 LEFT " + x + ", " + Frog.getY();
 				System.out.println("Sending: " + command);
 				out.println(command);
 				out.flush();
@@ -192,8 +237,6 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
-			x -= GameProperties.CHARACTER_STEP;	
 			
 			if (x + Frog.getWidth() < 0) {
 				x = GameProperties.SCREEN_WIDTH;
@@ -201,11 +244,13 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 			
 		} else if (e.getKeyCode() == KeyEvent.VK_D) {
 			
+			x += GameProperties.CHARACTER_STEP;	
+			
 			try {
 				Socket s = new Socket("localhost", SERVER_PORT);
 				OutputStream outstream = s.getOutputStream();
 				PrintWriter out = new PrintWriter(outstream);
-				String command = "PLAYER 1 UP\n";
+				String command = "PLAYER 1 RIGHT " + x + " " + Frog.getY();
 				System.out.println("Sending: " + command);
 				out.println(command);
 				out.flush();
@@ -214,8 +259,6 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
-			x += GameProperties.CHARACTER_STEP;	
 			
 			if (x >= GameProperties.SCREEN_WIDTH) {
 				x = -1 * Frog.getWidth();

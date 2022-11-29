@@ -1,9 +1,8 @@
-import java.awt.Container;
 
 public class CarRows {
 	
 		
-	public CarRows(Container container, Sprite Frog, Engine Engine) {
+	public CarRows(Sprite Frog, Engine Engine) {
 		
 		
 	Car[] CarRow1;
@@ -13,9 +12,9 @@ public class CarRows {
 	
 	CarRow1 = new Car[3];
 	
-	CarRow1[0] = new Car();
-	CarRow1[1] = new Car();
-	CarRow1[2] = new Car();
+	CarRow1[0] = new Car(1);
+	CarRow1[1] = new Car(2);
+	CarRow1[2] = new Car(3);
 	
 		for (Car Car : CarRow1) {
 			
@@ -25,7 +24,6 @@ public class CarRows {
 			Car.setHeight(68);
 			Car.setVisible(true);
 			Car.setMoving(false);
-			Car.setFrog(Frog);
 			Car.setImage("Car.png");
 			
 			Car.startMoving();
@@ -33,9 +31,9 @@ public class CarRows {
 		
 		CarRow2 = new Car[3];
 		
-		CarRow2[0] = new Car();
-		CarRow2[1] = new Car();
-		CarRow2[2] = new Car();
+		CarRow2[0] = new Car(4);
+		CarRow2[1] = new Car(5);
+		CarRow2[2] = new Car(6);
 		
 			for (Car Car : CarRow2) {
 				
@@ -45,7 +43,6 @@ public class CarRows {
 				Car.setHeight(68);
 				Car.setVisible(true);
 				Car.setReverse(true);
-				Car.setFrog(Frog);
 				Car.setImage("Car.png");
 				
 				Car.startMoving();
@@ -53,9 +50,9 @@ public class CarRows {
 			
 			CarRow3 = new Car[3];
 			
-			CarRow3[0] = new Car();
-			CarRow3[1] = new Car();
-			CarRow3[2] = new Car();
+			CarRow3[0] = new Car(7);
+			CarRow3[1] = new Car(8);
+			CarRow3[2] = new Car(9);
 			
 				for (Car Car : CarRow3) {
 					
@@ -65,7 +62,6 @@ public class CarRows {
 					Car.setHeight(68);
 					Car.setVisible(true);
 					Car.setMoving(false);
-					Car.setFrog(Frog);
 					Car.setImage("Car.png");
 					
 					Car.startMoving();

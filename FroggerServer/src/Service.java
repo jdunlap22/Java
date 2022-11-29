@@ -53,6 +53,9 @@ public class Service implements Runnable {
 		if ( command.equals("PLAYER")) {
 			int playerNo = in.nextInt();
 			String playerAction = in.next();
+			int playerX = in.nextInt();
+			int playerY = in.nextInt();
+			
 			System.out.println("Player "+playerNo+" moves "+playerAction);
 			
 			
@@ -63,7 +66,7 @@ public class Service implements Runnable {
 			OutputStream outstream = s2.getOutputStream();
 			PrintWriter out = new PrintWriter(outstream);
 
-			String commandOut = "PLAYER "+playerNo+" POSTION 500 400\n";
+			String commandOut = "PLAYER "+playerNo+ " " +playerAction+" "+playerX+ " " +playerY;
 			System.out.println("Sending: " + commandOut);
 			out.println(commandOut);
 			out.flush();
