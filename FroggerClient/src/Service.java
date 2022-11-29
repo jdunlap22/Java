@@ -54,6 +54,22 @@ public class Service implements Runnable {
 			int playerY = in.nextInt();
 			System.out.println("Player "+playerNo+" "+playerAction + " "+playerX+", "+playerY);
 		}
+		
+		if ( command.equals("CAR_POSITION")) {
+			int CarNo = in.nextInt();
+			String CarAction = in.next();
+			int CarX = in.nextInt();
+			int CarY = in.nextInt();
+			System.out.println("Player "+CarNo+" "+CarAction + " "+CarX+", "+CarY);
+		}
+		
+		if ( command.equals("LOG_POSITION")) {
+			int LogNo = in.nextInt();
+			String LogAction = in.next();
+			int LogX = in.nextInt();
+			int LogY = in.nextInt();
+			System.out.println("Player "+LogNo+" "+LogAction + " "+LogX+", "+LogY);
+		}
 	}
 
 }
