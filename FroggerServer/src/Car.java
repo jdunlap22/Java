@@ -9,6 +9,7 @@ public class Car extends Sprite implements Runnable {
 	private Thread t;
 	private int CarNum;
 	final static int SERVER_PORT = 5556;
+	final static int CLIENT_PORT = 5656;
 	
 	public Car(int CarNum) {
 		super(0, 0, 135, 68, "Car.png");
@@ -98,7 +99,6 @@ public class Car extends Sprite implements Runnable {
 				}
 			} else {
 				currentX += GameProperties.CHARACTER_STEP;
-				
 				try {
 					Socket s = new Socket("localhost", SERVER_PORT);
 					OutputStream outstream = s.getOutputStream();

@@ -46,6 +46,7 @@ public class Service implements Runnable {
 	
 	public void executeCommand(String command) throws IOException{
 	
+		System.out.println(command);
 		
 		if ( command.equals("PLAYER")) {
 			int playerNo = in.nextInt();

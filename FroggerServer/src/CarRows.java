@@ -27,6 +27,7 @@ public class CarRows {
 			Car.setImage("Car.png");
 			
 			Car.startMoving();
+			System.out.println("Moving");
 		}
 		
 		CarRow2 = new Car[3];
@@ -46,6 +47,7 @@ public class CarRows {
 				Car.setImage("Car.png");
 				
 				Car.startMoving();
+				System.out.println("Moving");
 			}
 			
 			CarRow3 = new Car[3];
@@ -65,6 +67,7 @@ public class CarRows {
 					Car.setImage("Car.png");
 					
 					Car.startMoving();
+					System.out.println("Moving");
 				}
 	
 	}

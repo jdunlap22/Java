@@ -66,7 +66,7 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							System.out.println("client connected");
+							//System.out.println("client connected");
 							
 						}
 						
@@ -168,7 +168,7 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 				Socket s = new Socket("localhost", SERVER_PORT);
 				OutputStream outstream = s.getOutputStream();
 				PrintWriter out = new PrintWriter(outstream);
-				String command = "PLAYER 1 UP " + Frog.getX() + ", " + y;
+				String command = "PLAYER 1 UP " + Frog.getX() + " " + y;
 				System.out.println("Sending: " + command);
 				out.println(command);
 				out.flush();
@@ -205,7 +205,7 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 				Socket s = new Socket("localhost", SERVER_PORT);
 				OutputStream outstream = s.getOutputStream();
 				PrintWriter out = new PrintWriter(outstream);
-				String command = "PLAYER 1 DOWN " + Frog.getX() + ", " + y;
+				String command = "PLAYER 1 DOWN " + Frog.getX() + " " + y;
 				System.out.println("Sending: " + command);
 				out.println(command);
 				out.flush();
@@ -228,7 +228,7 @@ public class Engine extends JFrame implements KeyListener, ActionListener {
 				Socket s = new Socket("localhost", SERVER_PORT);
 				OutputStream outstream = s.getOutputStream();
 				PrintWriter out = new PrintWriter(outstream);
-				String command = "PLAYER 1 LEFT " + x + ", " + Frog.getY();
+				String command = "PLAYER 1 LEFT " + x + " " + Frog.getY();
 				System.out.println("Sending: " + command);
 				out.println(command);
 				out.flush();

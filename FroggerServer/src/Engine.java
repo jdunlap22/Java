@@ -13,6 +13,8 @@ public class Engine implements KeyListener, ActionListener {
 	//data class instances
 	private Frog Frog;
 	private int Score;
+	private Car Car;
+	private Log Log;
 	private Database Database;
 	
 	public int getScore() {
@@ -32,9 +34,9 @@ public class Engine implements KeyListener, ActionListener {
 			System.out.println("Waiting for clients to connect...");
 			while(true) {
 				Socket s = server.accept();
-				System.out.println("client connected");
+				//System.out.println("client connected");
 				
-				Service myService = new Service(s);
+				Service myService = new Service(s, Frog, Car, Log);
 				Thread t = new Thread(myService);
 				t.start();
 			}
@@ -45,9 +47,10 @@ public class Engine implements KeyListener, ActionListener {
 	}
 	
 	
+	
 	public Engine() {
 		
-		ConnectServer();
+		System.out.println("client connected");
 		
 		// set up Frog
 		Frog = new Frog();
@@ -59,6 +62,7 @@ public class Engine implements KeyListener, ActionListener {
 		Frog.setMoving(true);
 		Frog.setImage("Frog.png");
 		
+		ConnectServer();
 		Database = new Database();		
 				
 		
